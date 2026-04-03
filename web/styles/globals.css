@@ -1,0 +1,56 @@
+:root {
+  --primary: #3b82f6; /* Bright blue for dark mode */
+  --primary-hover: #2563eb;
+  --secondary: #ef4444; /* Red accent */
+  --secondary-hover: #dc2626;
+  --background: #0f172a; /* Slate 900 */
+  --foreground: #f8fafc; /* Slate 50 */
+  --text-muted: #94a3b8; /* Slate 400 */
+  --card-bg: #1e293b; /* Slate 800 */
+  --card-border: #334155; /* Slate 700 */
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+body { background-color: var(--background); color: var(--foreground); font-family: 'Outfit', -apple-system, sans-serif; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* Navbar Variables */
+.navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+.nav-top { background: rgba(15, 23, 42, 0.95); color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; height: 40px; font-size: 13px; border-bottom: 1px solid var(--card-border); }
+.nav-top-left, .nav-top-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-bottom { background: rgba(30, 41, 59, 0.9); height: 72px; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); }
+.logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 900; color: white; }
+.logo-icon { background: var(--secondary); padding: 4px; border-radius: 4px; color: white !important;}
+.nav-links { display: flex; gap: 2rem; }
+.nav-link { color: var(--foreground); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+.nav-link:hover { color: var(--primary); }
+.btn-login { background: var(--secondary); color: white; border: none; padding: 8px 24px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; display: flex; gap: 8px; align-items: center;}
+.btn-login:hover { background: var(--secondary-hover); }
+
+/* Globals */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
+.btn-primary { background: var(--primary); color: white; padding: 12px 24px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer; }
+.btn-primary:hover { background: var(--primary-hover); }
+
+/* Layouts */
+.main-content { padding-top: 112px; }
+
+/* Grid Utilities */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+
+/* Card Component for Dark Theme */
+.card-dark { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s, border-color 0.2s; cursor: pointer; }
+.card-dark:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+/* Input Styling for Dark Theme */
+input, select, textarea {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--card-border);
+  color: white;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+}

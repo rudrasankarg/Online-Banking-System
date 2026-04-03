@@ -1,0 +1,102 @@
+CREATE TABLE IF NOT EXISTS admins (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'user',
+    phone VARCHAR(20),
+    country VARCHAR(100),
+    account_type VARCHAR(50) DEFAULT 'domestic',
+    account_status VARCHAR(20) DEFAULT 'pending',
+    notifications_enabled BOOLEAN DEFAULT TRUE,
+    two_factor_enabled BOOLEAN DEFAULT TRUE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS country VARCHAR(100);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS account_type VARCHAR(50) DEFAULT 'domestic';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS account_status VARCHAR(20) DEFAULT 'pending';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS notifications_enabled BOOLEAN DEFAULT TRUE;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS two_factor_enabled BOOLEAN DEFAULT TRUE;
+
+CREATE TABLE IF NOT EXISTS accounts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    account_number VARCHAR(20) UNIQUE NOT NULL,
+    account_type VARCHAR(50) NOT NULL,
+    balance DECIMAL(15, 2) DEFAULT 0.00,
+    currency VARCHAR(10) DEFAULT 'INR',
+    status VARCHAR(20) DEFAULT 'active',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS cards (
+    id SERIAL PRIMARY KEY,
+    account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    card_number VARCHAR(20) UNIQUE NOT NULL,
+    card_type VARCHAR(20) NOT NULL,
+    expiry_date DATE NOT NULL,
+    cvv VARCHAR(4) NOT NULL,
+    pin_hash VARCHAR(255),
+    status VARCHAR(20) DEFAULT 'active',
+    credit_limit DECIMAL(15, 2) DEFAULT 0.00,
+    current_spent DECIMAL(15, 2) DEFAULT 0.00,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE cards ADD COLUMN IF NOT EXISTS credit_limit DECIMAL(15, 2) DEFAULT 0.00;
+ALTER TABLE cards ADD COLUMN IF NOT EXISTS current_spent DECIMAL(15, 2) DEFAULT 0.00;
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    sender_account_id INTEGER REFERENCES accounts(id),
+    receiver_account_id INTEGER REFERENCES accounts(id),
+    amount DECIMAL(15, 2) NOT NULL,
+    transaction_type VARCHAR(50) NOT NULL,
+    description TEXT,
+    reference_id VARCHAR(100) UNIQUE,
+    status VARCHAR(20) DEFAULT 'completed',
+    beneficiary_name VARCHAR(255),
+    receipt_name VARCHAR(255),
+    receipt_data TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE transactions ADD COLUMN IF NOT EXISTS beneficiary_name VARCHAR(255);
+ALTER TABLE transactions ADD COLUMN IF NOT EXISTS receipt_name VARCHAR(255);
+ALTER TABLE transactions ADD COLUMN IF NOT EXISTS receipt_data TEXT;
+
+CREATE TABLE IF NOT EXISTS service_requests (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    service_code VARCHAR(100) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    amount DECIMAL(15, 2) DEFAULT 0.00,
+    status VARCHAR(20) DEFAULT 'completed',
+    details JSONB DEFAULT '{}'::jsonb,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admin_logs (
+    id SERIAL PRIMARY KEY,
+    admin_id INTEGER REFERENCES admins(id) ON DELETE SET NULL,
+    action VARCHAR(255) NOT NULL,
+    target_id INTEGER,
+    details JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
