@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Eye, Lock, Plus, Shield, Unlock } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
+import { API_BASE_URL } from '@/utils/apiConfig';
 
 export default function CardManagement() {
   const [cards, setCards] = useState([]);
@@ -13,7 +14,7 @@ export default function CardManagement() {
   const loadCards = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/cards', {
+      const res = await fetch(`${API_BASE_URL}/api/cards`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -34,7 +35,7 @@ export default function CardManagement() {
     setCvv('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/users/cards/${cardId}/action/init`, {
+      const res = await fetch(`${API_BASE_URL}/api/users/cards/${cardId}/action/init`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ export default function CardManagement() {
   const verifyCardAction = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/users/cards/${otpState.cardId}/action/verify`, {
+      const res = await fetch(`${API_BASE_URL}/api/users/cards/${otpState.cardId}/action/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export default function CardManagement() {
   const applyNewCard = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/cards/apply', {
+      const res = await fetch(`${API_BASE_URL}/api/cards/apply`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

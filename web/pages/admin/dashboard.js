@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Users, Activity, ShieldAlert, Search, Database, Trash2, Lock, Unlock, CreditCard, RefreshCw } from 'lucide-react';
-
-const API_BASE_URL = 'http://localhost:5000';
+import { API_BASE_URL } from '@/utils/apiConfig';
 
 const sidebarItems = [
   { id: 'overview', label: 'Overview' },

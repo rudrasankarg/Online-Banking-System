@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDownLeft, ArrowUpRight, Filter, Plus, Search, Wallet, Wrench } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Sidebar from '@/components/Sidebar';
+import { API_BASE_URL } from '@/utils/apiConfig';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -18,8 +19,8 @@ export default function Dashboard() {
     const headers = { Authorization: `Bearer ${tokenValue}` };
 
     const [dashboardRes, catalogRes] = await Promise.all([
-      fetch('http://localhost:5000/api/users/dashboard', { headers }),
-      fetch('http://localhost:5000/api/users/services/catalog', { headers })
+      fetch(`${API_BASE_URL}/api/users/dashboard`, { headers }),
+      fetch(`${API_BASE_URL}/api/users/services/catalog`, { headers })
     ]);
 
     const dashboardData = await dashboardRes.json();
@@ -65,7 +66,7 @@ export default function Dashboard() {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/users/services', {
+      const res = await fetch(`${API_BASE_URL}/api/users/services`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ export default function Dashboard() {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/users/deposit', {
+      const res = await fetch(`${API_BASE_URL}/api/users/deposit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

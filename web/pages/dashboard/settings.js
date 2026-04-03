@@ -3,8 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Bell, Shield, Landmark, MapPin, CheckCircle2, Globe, User } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
-
-const API_BASE_URL = 'http://localhost:5000';
+import { API_BASE_URL } from '@/utils/apiConfig';
 
 const branchOptions = [
   'Bangalore Central IT Park',
@@ -42,7 +41,7 @@ export default function DashboardSettings() {
       return;
     }
 
-    fetch('http://localhost:5000/api/users/profile', {
+    fetch(`${API_BASE_URL}/api/users/profile`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(async (res) => {

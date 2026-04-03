@@ -38,7 +38,7 @@ export default function Transfers() {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch('http://localhost:5000/api/users/dashboard', {
+    fetch(`${API_BASE_URL}/api/users/dashboard`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(async (res) => {
@@ -69,7 +69,7 @@ export default function Transfers() {
     setMessage('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/users/transfers/init', {
+      const res = await fetch(`${API_BASE_URL}/api/users/transfers/init`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export default function Transfers() {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/users/transfers/verify', {
+      const res = await fetch(`${API_BASE_URL}/api/users/transfers/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

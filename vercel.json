@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "public": true,
+  "github": {
+    "enabled": true,
+    "silent": false
+  },
+  "regions": ["cle1"],
+  "trailingSlash": false,
+  "cleanUrls": true,
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "rootDirectory": "web"
+}

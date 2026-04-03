@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ShieldCheck, Mail, Lock, ArrowRight } from 'lucide-react';
+import { API_BASE_URL } from '../../utils/apiConfig';
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/admin/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -45,7 +46,7 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/admin/login/verify', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/admin/login/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tempToken, otp })

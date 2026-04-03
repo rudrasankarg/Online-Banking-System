@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import { Landmark, Lock, User, ArrowRight, Mail, Phone, Globe } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -46,7 +47,7 @@ export default function Register() {
     
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/user/register', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -79,7 +80,7 @@ export default function Register() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/user/register/verify', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/user/register/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tempToken, otp: enteredOtp })

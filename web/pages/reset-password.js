@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ArrowLeft, CheckCircle2, Lock } from 'lucide-react';
 import Layout from '../components/Layout';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/user/reset-password', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/user/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password })

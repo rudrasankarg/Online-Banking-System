@@ -41,7 +41,7 @@ export default function History() {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch('http://localhost:5000/api/users/transactions', {
+    fetch(`${API_BASE_URL}/api/users/transactions`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(async (res) => {

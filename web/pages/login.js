@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import { Landmark, Lock, User, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ export default function Login() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/user/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -52,7 +53,7 @@ export default function Login() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/user/login/verify', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/user/login/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tempToken, otp: enteredOtp })
