@@ -1,4 +1,4 @@
-# LuxBank - Advanced Online Banking System
+# LuxBank - Online Banking System
 
 A full-stack, premium online banking solution featuring a Next.js web application, a React Native mobile app, and a robust Node/Express backend.
 
